@@ -15,7 +15,9 @@ namespace Bai13
         {
             Console.OutputEncoding = Encoding.UTF8;
             BaiTap1();
-
+            FindString();
+            SoSanh2Chuoi();
+            GoodString();
            
         }
 
@@ -58,12 +60,15 @@ namespace Bai13
             Console.ReadKey();
         }
 
-        static void FindString(string VString, string Find)
+        static void FindString()
         {
             Console.Clear();
             Console.WriteLine("Câu 2: Đếm số khoảng trắng (Ký tự) trong chuỗi\n\n");
             Console.Write("Nhập Chuỗi:");
-            string s = Console.ReadLine();
+            string VString = Console.ReadLine();
+
+            Console.Write("Nhập Chuỗi/Ký tự cần tìm :");
+            string Find = Console.ReadLine();
 
             string Chinh = VString.ToUpper();
             string Phu = Find.ToUpper();
@@ -76,9 +81,12 @@ namespace Bai13
                 int StartS = Chinh.IndexOf(Phu);
                 Console.WriteLine(VString.Substring(StartS, Find.Length) + " tại vị trí {0} đến {1} \n", StartS, StartS + Find.Length - 1);
             }
+
+            Console.WriteLine("Bấm phím bất kỳ để tiếp tục");
+            Console.ReadKey();
         }
 
-        static void HandleString3()
+        static void SoSanh2Chuoi()
         {
             Console.Write("Nhập Chuỗi 1:");
             string s1 = Console.ReadLine();
@@ -89,17 +97,49 @@ namespace Bai13
             int kq = s1.ToLower().CompareTo(s2.ToLower());
             if (kq == 0)
             {
-                Console.WriteLine("s và s2 giống nhau");
+                Console.WriteLine("s1 và s2 giống nhau");
             }
             else if (kq < 0)
             {
-                Console.WriteLine("s < s2");
+                Console.WriteLine("s1 < s2");
             }
             else
             {
-                Console.WriteLine("s > s2");
+                Console.WriteLine("s1 > s2");
             }
-            Console.ReadLine();
+
+            Console.WriteLine("Bấm phím bất kỳ để tiếp tục");
+            Console.ReadKey();
+        }
+
+        static void GoodString()
+        {
+
+            Console.WriteLine("Sửa chuỗi về dạng chuẩn hóa");
+            Console.WriteLine("Nhập chuỗi:");
+            string ten = Console.ReadLine();
+          
+            ten = ten.Trim();
+
+            Console.WriteLine(ten[0]);
+            string[] AVString = ten.Split(
+                        new char[] { ' ' },
+                        StringSplitOptions.RemoveEmptyEntries);
+            ten = "";
+            for (int i = 0; i < AVString.Length; i++)
+            {
+
+                AVString[i] = AVString[i].ToLower();
+                char[] TG = AVString[i].ToCharArray();
+                TG[0] = char.ToUpper(TG[0]);
+                ten += new string(TG) + " ";
+            }
+            ten = ten.Trim();
+            Console.WriteLine("Chuỗi sau khi tối ưu:");
+            Console.WriteLine(ten);
+
+            Console.WriteLine("Bấm phím bất kỳ để tiếp tục");
+            Console.ReadKey();
         }
 
     }
