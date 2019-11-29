@@ -45,7 +45,7 @@ namespace Bai16
                 Console.WriteLine("Mã: {0} ; Value: {1}", iteam.Key, iteam.Value);
             }
 
-            Console.Write("\n\nNhập phím bất kỳ đểb tiết tục.......");
+            Console.Write("\n\nNhập phím bất kỳ để tiết tục.......");
             Console.ReadKey();
             Console.Write("\n\n");
         }
