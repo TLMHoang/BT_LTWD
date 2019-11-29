@@ -8,9 +8,9 @@ namespace Bai17
 {
     class Program
     {
-        static Dictionary<string, string> EnToTV = new Dictionary<string, string>();
-        static Dictionary<string, string> TVToEn = new Dictionary<string, string>();
-
+        static Dictionary<string, List<string>> EnToTV = new Dictionary<string, List<string>>();
+        static Dictionary<string, List<string>> TVToEn = new Dictionary<string, List<string>>();
+        
         private static void App()
         {
             string VN = "Tiếng Việt";
@@ -43,9 +43,6 @@ namespace Bai17
                     case 27:
                         break;
                     default:
-                        Console.WriteLine("Nhập đúng số chức năng để thực hiện");
-                        Console.WriteLine("Bấm phím bất kỳ để chọn lại");
-                        Console.ReadKey();
                         break;
                 }
 
@@ -56,7 +53,7 @@ namespace Bai17
 
 
 
-        private static bool Menu(Dictionary<string, string> Trans, string Val)
+        private static bool Menu(Dictionary<string, List<string>> Trans, string Val)
         {
             Console.Clear();
             Console.WriteLine(Val.ToUpper());
@@ -64,6 +61,8 @@ namespace Bai17
             Console.WriteLine("2: Thêm Từ");
             Console.WriteLine("3. Sửa từ");
             Console.WriteLine("4: Xóa từ");
+            Console.WriteLine("5: Thêm nghĩa vào từ đã có");
+            Console.WriteLine("6: Xóa 1 nghĩa của từ");
             Console.WriteLine("ESC: Trở về");
             Console.Write("Chon: ");
 
@@ -87,6 +86,12 @@ namespace Bai17
                         Console.Clear();
                         XoaTu(Trans, Val);
                         break;
+                    case 53:
+                        DongNghia(Trans, Val);
+                        break;
+                    case 54:
+                        XoaNghia(Trans, Val);
+                        break;
                     case 27:
                         return false;
                     default:
@@ -102,12 +107,88 @@ namespace Bai17
             
         }
 
-        private static void XoaTu(Dictionary<string, string> Trans, string Val)
+        private static void XoaNghia(Dictionary<string, List<string>> Trans, string Val)
+        {
+            Console.Clear();
+            do
+            {
+
+                Console.WriteLine("Nhập từ " + Val + " cần sửa");
+                string VString = Console.ReadLine().ToLower();
+                if (Trans.ContainsKey(VString))
+                {
+                    if (Trans[VString].Count == 1)
+                    {
+                        Console.WriteLine("Nhập nghĩa của từ " + VString + " : ");
+                        Trans[VString][0] = Console.ReadLine().ToLower();
+                    }
+                    else
+                    {
+                        do
+                        {
+                            XuatNghiaCuaTu(Trans, VString);
+                            Console.Write("Chọn số theo nghĩa cần xóa: ");
+                            int i = Convert.ToInt32(Console.ReadKey().KeyChar);
+                            if (i >= 49 && i <= (Trans[VString].Count + 49))
+                            {
+                                Trans[VString].RemoveAt(i - 49);
+                            }
+                            else
+                            {
+                                Console.WriteLine("\nKhông có nghĩa tại vị trí đó");
+                            }
+
+                            Console.WriteLine("\nBấm phím bất kỳ để tiếp tục sử nghĩa " + VString + ".\n\nESC để quay lại");
+                        } while (Convert.ToInt32(Console.ReadKey().KeyChar) != 27);
+                        break;
+                    }
+                }
+                else
+                {
+                    Console.WriteLine(VString + " không có trong từ diển.");
+                }
+                Console.WriteLine("Bấm phím bất kỳ để sửa từ.\n\nESC để quay lại");
+            } while (Convert.ToInt32(Console.ReadKey().KeyChar) != 27);
+        }
+
+        private static void DongNghia(Dictionary<string, List<string>> trans, string val)
+        {
+            Console.Clear();
+            do
+            {
+                Console.WriteLine("Nhập từ cần them nghĩa : ");
+                string VString = Console.ReadLine().ToLower();
+                if (trans.ContainsKey(VString))
+                {
+                    TuDongNghia(trans, VString);
+                    break;
+                }
+                else
+                {
+                    Console.WriteLine("Từ này không có trong từ điển");
+                }
+
+                Console.WriteLine("Bấm phím bất kỳ để thêm nghĩa khác.\n\nESC để quay lại");
+            } while (Convert.ToInt32(Console.ReadKey().KeyChar) != 27);
+        }
+
+        private static void TuDongNghia(Dictionary<string, List<string>> trans, string val)
+        {
+            do
+            {
+                Console.WriteLine("\nNghĩa khác của " + val + " : ");
+                trans[val].Add(Console.ReadLine().ToLower());
+
+                Console.WriteLine("Bấm phím bất kỳ để thêm nghĩa khác.\n\nESC để quay lại");
+            } while (Convert.ToInt32(Console.ReadKey().KeyChar) != 27);
+        }
+
+        private static void XoaTu(Dictionary<string, List<string>> Trans, string Val)
         {
             do
             {
                 Console.WriteLine("Nhập từ " + Val + " cần xóa: ");
-                string VString = Console.ReadLine();
+                string VString = Console.ReadLine().ToLower();
                 if (Trans.Remove(VString))
                 {
                     Console.WriteLine("Xóa thành công");
@@ -121,21 +202,54 @@ namespace Bai17
             } while (Convert.ToInt32(Console.ReadKey().KeyChar) != 27);
         }
 
-        private static void SuaTu(Dictionary<string, string> Trans, string Val)
+        private static void SuaTu(Dictionary<string, List<string>> Trans, string Val)
         {
             do
             {
 
                 Console.WriteLine("Nhập từ " + Val + " cần sửa");
-                string VString = Console.ReadLine();
+                string VString = Console.ReadLine().ToLower();
                 if (Trans.ContainsKey(VString))
                 {
-                    Console.WriteLine("Nhap nghĩa Tiếng ANH");
-                    TVToEn[VString] = Console.ReadLine();
+                    //Console.WriteLine("Nhap nghĩa : ");
+                    //Trans[VString].Add(Console.ReadLine());
+                    if (Trans[VString].Count == 1)
+                    {
+                        Console.WriteLine("Nhập nghĩa của từ " + VString + " : ");
+                        Trans[VString][0] = Console.ReadLine().ToLower();
+                    }
+                    else
+                    {
+                        do
+                        {
+                            XuatNghiaCuaTu(Trans, VString);
+                            Console.Write("Chọn số theo nghĩa cần sửa: ");
+                            int i = Convert.ToInt32(Console.ReadKey().KeyChar);
+                            if (i >= 49 && i <= (Trans[VString].Count + 49))
+                            {
+                                Console.Write("\nNhập nghĩa mới: ");
+                                Trans[VString][i - 49] = Console.ReadLine().ToLower();
+                            }
+                            else
+                            {
+                                Console.WriteLine("Không có nghĩa tại vị trí đó");
+                            }
+
+                            Console.WriteLine("Bấm phím bất kỳ để tiếp tục sử nghĩa " + VString + ".\n\nESC để quay lại");
+                        } while (Convert.ToInt32(Console.ReadKey().KeyChar) != 27);
+                        break;
+                    }
                 }
                 else
                 {
-                    Console.WriteLine(VString + " không có trong từ diển");
+                    Console.WriteLine(VString + " không có trong từ diển.\n Bạn có muốn thêm từ này không? Phim bất kỳ để thêm. ESC de bỏ qua.");
+                    if (Convert.ToInt32(Console.ReadKey().KeyChar) != 27)
+                    {
+                        Console.WriteLine("Nhập Nghĩa : ");
+                        Trans.Add(VString, new List<string> { Console.ReadLine().ToLower() });
+                        
+                        //string VString = Console.ReadLine();
+                    }
                 }
 
 
@@ -143,12 +257,12 @@ namespace Bai17
             } while (Convert.ToInt32(Console.ReadKey().KeyChar) != 27);
         }
 
-        private static void ThemTu(Dictionary<string, string> Trans, string Val)
+        private static void ThemTu(Dictionary<string, List<string>> Trans, string Val)
         {
             do
             {
                 Console.WriteLine("Nhập từ " + Val + " cần thêm");
-                string VString = Console.ReadLine();
+                string VString = Console.ReadLine().ToLower();
                 if (Trans.ContainsKey(VString))
                 {
                     Console.WriteLine(VString + " đã có trong từ diển");
@@ -156,24 +270,25 @@ namespace Bai17
                 }
                 else
                 {
-                    Console.WriteLine("Nhập nghĩa của từ " + VString + " : ");
-                    TVToEn[VString] = Console.ReadLine();
+                    Console.WriteLine("Nhap nghĩa : ");
+                    Trans.Add(VString, new List<string> { Console.ReadLine().ToLower() });
+
+
                 }
 
                 Console.WriteLine("Bấm phím bất kỳ để thêm từ.\n\nESC để quay lại");
             } while (Convert.ToInt32(Console.ReadKey().KeyChar) != 27);
         }
 
-        private static void TraTu(Dictionary<string, string> Trans, string Val)
+        private static void TraTu(Dictionary<string, List<string>> Trans, string Val)
         {
             do
             {
                 Console.WriteLine("Nhập từ " + Val + " cần tra");
-                string VString = Console.ReadLine();
+                string VString = Console.ReadLine().ToLower();
                 if (Trans.ContainsKey(VString))
                 {
-                    
-                    Console.WriteLine("Nghĩa của " + VString + " Là : " + Trans[VString]);
+                    XuatNghiaCuaTu(Trans, VString); 
                 }
                 else
                 {
@@ -182,6 +297,15 @@ namespace Bai17
 
                 Console.WriteLine("Bấm phím bất kỳ để tìm từ.\n\nESC để quay lại");
             } while (Convert.ToInt32(Console.ReadKey().KeyChar) != 27);
+        }
+
+        private static void XuatNghiaCuaTu(Dictionary<string, List<string>> trans, string vString)
+        {
+            Console.WriteLine("Nghĩa của " + vString + " Là :");
+            for (int i = 0; i < trans[vString].Count; i++)
+            {
+                Console.WriteLine("{0} : {1}", i + 1, trans[vString][i]);
+            }
         }
 
         static void Main(string[] args)
