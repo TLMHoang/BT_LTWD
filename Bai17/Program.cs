@@ -211,8 +211,6 @@ namespace Bai17
                 string VString = Console.ReadLine().ToLower();
                 if (Trans.ContainsKey(VString))
                 {
-                    //Console.WriteLine("Nhap nghĩa : ");
-                    //Trans[VString].Add(Console.ReadLine());
                     if (Trans[VString].Count == 1)
                     {
                         Console.WriteLine("Nhập nghĩa của từ " + VString + " : ");
@@ -247,8 +245,6 @@ namespace Bai17
                     {
                         Console.WriteLine("Nhập Nghĩa : ");
                         Trans.Add(VString, new List<string> { Console.ReadLine().ToLower() });
-                        
-                        //string VString = Console.ReadLine();
                     }
                 }
 
