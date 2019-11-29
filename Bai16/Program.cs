@@ -60,6 +60,11 @@ namespace Bai16
                 {
                     dic.Add(i, "Name" + random.Next(100).ToString());
                 }
+                else
+                {
+                    Console.WriteLine("Key đã có.");
+                    
+                }
                 
             }
         }
