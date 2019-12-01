@@ -61,6 +61,8 @@ namespace Bai15
             }
             XuatListInt(listInt);
             listInt.Sort();
+            XuatListInt(listInt);
+            listInt.Reverse();
             Console.WriteLine("\nList sau săp xếp là:");
             XuatListInt(listInt);
             
