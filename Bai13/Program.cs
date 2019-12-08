@@ -141,6 +141,6 @@ namespace Bai13
             Console.WriteLine("Bấm phím bất kỳ để tiếp tục");
             Console.ReadKey();
         }
-        //afhsfgasghdskfafdsjljgdsdsgf;d'f
+        //coment choi thoi chu ko co lam gii 
     }
 }
