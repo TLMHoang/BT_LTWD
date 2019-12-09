@@ -11,6 +11,7 @@ namespace Bai13
         //Nhập vào 1 chuỗi, sau đó:
         //1. Đếm xem chuỗi có bao nhiêu in HOA, in thường, số
         //2. Đếm số khoảng trắng trong chuỗi.
+        //Tao test thoi
         static void Main(string[] args)
         {
             Console.OutputEncoding = Encoding.UTF8;
